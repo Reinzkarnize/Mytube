@@ -1,13 +1,10 @@
 # MyTube
+MyTube is a web application that allows users to save YouTube playlists and watch videos from their playlists in one convinient place. This README file provides an overview of the project and guides users on how to set up and use the application.
 
 ## Demo
 You can watch a demo of the MyTube project on [YouTube](https://youtu.be/cl2S9rl2kGs).
 
-## Details
-### Description
-MyTube is a web application that allows users to save YouTube playlists and watch videos from their playlists. This README file provides an overview of the project and guides users on how to set up and use the application.
-
-### Features
+## Features
 
 - User Registration: Users can create an account to access the features of the website.
 - Playlist Management: Users can create new playlists, view their existing playlists, and remove playlists.
@@ -15,7 +12,7 @@ MyTube is a web application that allows users to save YouTube playlists and watc
 - Video Playback: Users can watch videos from their playlists.
 - Account Settings: Users can change their username and password.
 
-### Technologies Used
+## Technologies Used
 
 The MyTube web application is built using the following technologies:
 
@@ -27,7 +24,7 @@ The MyTube web application is built using the following technologies:
 - PyTube: Python library used for parsing YouTube URLs and retrieving video information.
 - Flask-Session: Flask extension used for managing user sessions.
 
-### Installation
+## Installation
 
 To run the MyTube web application on your local machine, follow these steps:
 
@@ -36,7 +33,7 @@ To run the MyTube web application on your local machine, follow these steps:
 3. Run the application: `flask run`
 4. Open your web browser and visit `http://localhost:5000` to access the MyTube application.
 
-### Usage
+## Usage
 
 1. Register a new account or log in with your existing account.
 2. On the homepage, you can view your existing playlists and create new playlists.
