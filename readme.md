@@ -1,4 +1,6 @@
 # MyTube
+YouTube is a fantastic platform for discovering and enjoying videos, but managing playlists can sometimes be complicated due to the abundance of menus and options. To address this issue, I created a web application that allows users to save and organize YouTube playlists in a user-friendly manner.
+
 MyTube is a web application that allows users to save YouTube playlists and watch videos from their playlists in one convinient place. This README file provides an overview of the project and guides users on how to set up and use the application.
 
 ## Demo
@@ -41,3 +43,6 @@ To run the MyTube web application on your local machine, follow these steps:
 4. You can watch videos from your playlists by clicking on the playlist and navigating to the playlist page.
 5. In the account settings, you can change your username and password.
 6. Log out of your account by clicking on the "Logout" button.
+
+
+
