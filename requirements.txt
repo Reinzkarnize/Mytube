@@ -1,0 +1,9 @@
+Flask
+Flask-Session
+Werkzeug
+cs50
+pytube
+os
+requests
+urllib
+functools
