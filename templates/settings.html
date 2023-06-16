@@ -1,0 +1,77 @@
+{% extends "layout.html" %}
+
+{% block title %}Settings{% endblock %}
+
+{% block main %}
+
+<main class="settings_main">
+    <div class="s_main">
+        <h2>Settings</h2>
+        <div class="s_main-2">
+            <div class="s_menu">
+                <li class="uname_btn" style="background-color: rgb(0, 0, 0, 0.3);"><a>Change username</a></li>
+                <li class="pwd_btn"><a>Change password</a></li>
+            </div>
+            <div class="s_content">
+                <div class="c_name">
+                    <span>
+                        current username:
+                    </span>
+                    <span><h3>{{ user_name[0].username }}</h3></span>
+                    <span>
+                        <form action="/change_usrname" method="post">
+                            <input class="in-2" name="new_username" placeholder="Enter new username" type="text">
+                            <input class="is-2" type="submit" value="SAVE CHANGES">
+                        </form>
+                    </span>
+                </div>
+                <div class="c_password">
+                    <span>
+                        <form action="/change_password" method="post">
+                            <div>
+                                <label for="old-password">old password:</label>
+                                <input class="in-2" name="old_pwd" type="password">
+                            </div>
+                            <div>
+                                <label for="new-password">new password:</label>
+                                <input class="in-2" name="new_pwd" type="password">
+                            </div>
+                            <div>
+                                <label for="confirm-password">confirm new password:</label>
+                                <input class="in-2" name="confirmation" type="password">
+                            </div>
+                            <input class="submit_pwd" type="submit" value="SAVE CHANGE">
+                        </form>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const nameButton = document.querySelector(".uname_btn");
+        const pwdButton = document.querySelector(".pwd_btn");
+        const nameMenu = document.querySelector(".c_name");
+        const pwdMenu = document.querySelector(".c_password");
+
+        nameButton.addEventListener('click', () => {
+            nameMenu.style.display = 'block';
+            pwdMenu.style.display = 'none';
+
+            nameButton.style.backgroundColor = 'rgb(0, 0, 0, 0.3)'; // Set the active background color
+            pwdButton.style.backgroundColor = ''; // Revert the other button's background color
+        });
+
+        pwdButton.addEventListener('click', () => {
+            nameMenu.style.display = 'none';
+            pwdMenu.style.display = 'block';
+
+            pwdButton.style.backgroundColor = 'rgb(0, 0, 0, 0.3)'; // Set the active background color
+            nameButton.style.backgroundColor = ''; // Revert the other button's background color
+        });
+    });
+</script>
+
+{% endblock %}

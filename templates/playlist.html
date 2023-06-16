@@ -1,0 +1,65 @@
+{% extends "layout.html" %}
+
+{% block title %}Playlist{% endblock %}
+
+{% block body %} class='playlist_body' {% endblock %}
+
+{% block main %}
+<div class="video_main">
+    <div class="vmain-1">
+            <div class="vmain-url">
+                <iframe src="{{videos[0].url}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            </div>
+            <div class="vmain-title">
+                <div class="v_title-header">
+                    <a>Playlist:</a>
+                </div>
+                <div class="v_title-list">
+                {% for video in videos %}
+                    <div class="v_list"><a link="{{ video.url }}">{{ video.video_title }}</a></div>
+                {% endfor %}
+                </div>
+            </div>
+    </div>
+</div>
+<script>
+    window.addEventListener('DOMContentLoaded', adjustWidthToRatio);
+
+    function adjustWidthToRatio() {
+        var element = document.querySelector('.vmain-1 .vmain-url');
+        var height = element.clientHeight; // Get the height of the element
+        var width = (height * 16) / 9; // Calculate the width based on the 16:9 ratio
+
+        element.style.width = width + 'px'; // Set the calculated width
+    }
+
+    // Get all the v_list elements
+    const vListItems = document.querySelectorAll('.v_list');
+
+    vListItems.forEach((item, index) => {
+        item.addEventListener('click', function(event) {
+            event.preventDefault();
+
+            // Remove active class from all v_list items
+            vListItems.forEach((vListItem) => {
+                vListItem.classList.remove('active');
+            });
+
+            // Add active class to the clicked v_list item
+            item.classList.add('active');
+
+            // Get the video URL from the clicked v_list item's data-url attribute
+            const videoUrl = item.querySelector('a').getAttribute('link');
+
+            // Update the src attribute of the videoPlayer iframe with the new video URL
+            const videoPlayer = document.querySelector('iframe');
+            videoPlayer.src = videoUrl;
+        });
+
+        // Make the first v_list item active by default
+        if (index === 0) {
+            item.classList.add('active');
+        }
+    });
+</script>
+{% endblock %}

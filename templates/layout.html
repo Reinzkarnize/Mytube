@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="/static/favicon.ico" rel="icon">
+    <link rel="stylesheet" href="static/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <title>MyTube: {% block title %}{% endblock %}</title>
+</head>
+<body {% block body %}{% endblock %}>
+    <header>
+        <div class="back_navbar">
+            <nav>
+                <div class="container-fluid">
+                    <a class="navbar_menu"><i class="fas fa-bars"></i></a>
+                    <a class="navbar_brand" href="/"><span class="blue">My</span><span class="white">Tube</span></a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    {% block main %}
+    {% endblock %}
+
+    <div class="drop_menu">
+        <div>
+            <button class="close_menu">&lt; CLOSE MENU</button>
+        </div>
+        <br>
+        {% if session["user_id"] %}
+            <div class="menu_list">
+                <div class="header"><div>ACCOUNT</div></div>
+                <div class="column">
+                    <li><a href="/">PLAYLIST</a></li>
+                    <li><a href="/settings">SETTINGS</a></li>
+                    <li><a href="/logout">LOGOUT</a></li>
+                </div>
+            </div>
+            <div class="menu_list">
+                <div class="header"><div>PLAYLIST</div></div>
+                <div class="column">
+                {% for playlist in playlists %}
+                        <li><a class="tilte_drop_a" href="/playlist?playlist_id={{ playlist.playlist_id }}">{{ playlist.title }}</a></li>
+                {% endfor %}
+                </div>
+            </div>
+        {% else %}
+            <div class="menu_list">
+                <div class="header"><div>ACCOUNT</div></div>
+                <div class="column">
+                    <li><a href="/login">LOGIN</a></li>
+                    <li><a href="/register">REGISTER</a></li>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+    <div class="darkin_kayn"></div>
+
+    <script>
+
+
+
+        var dropMenu = document.querySelector('.drop_menu');
+        var openButton = document.querySelector('.navbar_menu');
+        var closeButton = document.querySelector('.close_menu');
+        var darkBackground = document.querySelector('.darkin_kayn');
+        var isOpen = false;
+
+        function toggleMenu() {
+            isOpen = !isOpen;
+            dropMenu.classList.toggle('open', isOpen);
+            darkBackground.classList.toggle('open', isOpen);
+        }
+
+        openButton.addEventListener('click', toggleMenu);
+        closeButton.addEventListener('click', toggleMenu);
+        darkBackground.addEventListener('click', toggleMenu);
+    </script>
+</body>
+</html>
+

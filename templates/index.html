@@ -1,0 +1,165 @@
+{% extends "layout.html" %}
+
+{% block title %}Playlist{% endblock %}
+
+{% block main %}
+  <!-- <script src="static/script.js"></script> -->
+  <div class="popup-container" id="popup-container">
+    <div class="popup-background" id="popup-background"></div>
+
+    <div class="popup-content">
+      <h2>Create Playlist</h2>
+      <form action="/" method="post" enctype="multipart/form-data">
+        <div class="form_content">
+          <li class="upload-image">
+            <label for="upload_image">image:</label>
+            <input autocomplete="off" type="file" id="upload_image" accept="image/*" style="display: none;" name="upload_image">
+            <img id="preview_image" src="static/upload_image.png" onclick="document.getElementById('upload_image').click();" />
+          </li>
+          <li class="url-title">
+            <div class="url">
+              <label for="url_yt">Youtube Playlist url:</label><br>
+              <input autocomplete="off" name="yt-play-url">
+            </div>
+            <div class="title">
+              <label for="title">Playlist title:</label><br>
+              <input autocomplete="off" name="play-title">
+            </div>
+          </li>
+        </div>
+        <div class="submit_create">
+          <input type="submit" value="CREATE PLAYLIST">
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <main class="index_main">
+    <div class="main">
+      <h2>Playlist
+        <a class="add-playlist"><img src="static/add.png" alt="Add Playlist"></a>
+        <a><i class="fa-solid fa-trash"></i></a>
+      </h2>
+
+      <div class="playlist-container">
+      {% for playlist in playlists %}
+
+            <div class="border">
+              <div class="playlist">
+                <div class="remove_playlist" >
+                  <a href="/remove?playlist_id={{ playlist.playlist_id }}">
+                    <span class="remove_btn"><i class="fa-solid fa-trash-can"></i></span>
+                    <span>REMOVE</span>
+                  </a>
+                </div>
+                <a class="playlist_link" href="/playlist?playlist_id={{ playlist.playlist_id }}">
+                  <div class="playlist-image">
+                    {% if playlist.image is none %}
+                      <img src="static/playlist/no_image.png">
+                    {% else %}
+                      <img src="static/playlist/{{playlist.image}}">
+                    {% endif %}
+                  </div>
+                  <div class="title-container">
+                    <div class="playlist-title">{{ playlist.title }}</div>
+                  </div>
+                </a>
+              </div>
+            </div>
+
+      {% endfor %}
+
+        <div class="border">
+          <div class="playlist_new">
+            <div class="play_list-add">
+              <div class="plus-line"></div>
+            </div>
+            <div class="add_text">Add New Playlist</div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <script>
+    // remove playlist href open/close
+    var remove_btn = document.querySelector(".fa-trash");
+
+    var removeMenues = document.querySelectorAll('.remove_playlist');
+    var removeButtons = document.querySelectorAll('.remove_playlist a');
+    var playlistLinks = document.querySelectorAll('.playlist_link');
+    var isOpen2 = false;
+
+    function toggleMenu() {
+      isOpen2 = !isOpen2;
+
+      removeMenues.forEach((removeButton) => {
+        removeButton.style.display = isOpen2 ? "block" : "none";
+      });
+
+      removeButtons.forEach((removeButton) => {
+        removeButton.style.display = isOpen2 ? "flex" : "none";
+      });
+
+      playlistLinks.forEach((playlistLink) => {
+        playlistLink.style.display = isOpen2 ? "none" : "block";
+      });
+
+      remove_btn.style.color = isOpen2? "red": "white";
+    }
+
+    remove_btn.addEventListener('click', toggleMenu);
+
+
+    // Scroll exceed title
+    const playlistTitles = document.querySelectorAll('.playlist-title');
+
+    playlistTitles.forEach((title) => {
+      if (title.scrollWidth > title.clientWidth) {
+        title.classList.remove('no-scroll');
+      } else {
+        title.classList.add('no-scroll');
+      }
+    });
+
+    // Create Playlist Pop Up
+    const popupButton = document.querySelector('.add-playlist');
+    const popupButton2 = document.querySelector('.playlist_new');
+    const popupContainer = document.getElementById('popup-container');
+
+    popupButton.addEventListener('click', function () {
+      popupContainer.style.display = 'flex';
+    });
+
+    popupButton2.addEventListener('click', function () {
+      popupContainer.style.display = 'flex';
+    });
+
+    popupContainer.addEventListener('click', function (event) {
+      if (event.target === popupContainer) {
+        popupContainer.style.display = 'none';
+      }
+    });
+
+    // Upload image
+    const uploadImageInput = document.getElementById('upload_image');
+    const previewImage = document.getElementById('preview_image');
+    const playlistForm = document.getElementById('playlist-form');
+
+    // Handle file selection
+    uploadImageInput.addEventListener('change', function (e) {
+      const file = e.target.files[0];
+      const reader = new FileReader();
+
+      reader.onload = function (e) {
+        previewImage.src = e.target.result;
+      };
+
+      if (file) {
+        reader.readAsDataURL(file);
+      }
+    });
+  </script>
+{% endblock %}
