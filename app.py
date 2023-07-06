@@ -5,17 +5,11 @@ from cs50 import SQL
 from pytube import Playlist, YouTube
 import os
 
-from helpers import apology, login_required, lookup
+from helpers import apology, login_required
 
 app = Flask(__name__)
 
-# # folder upload file
-# UPLOAD_FOLDER = 'assets/playlist'
-# ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
-# app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-
-app.config['MAX_CONTENT_LENGTH'] = 32 * 1024 * 1024  # Set maximum upload size to 32 megabytes
-
+app.config['MAX_CONTENT_LENGTH'] = 3 * 1024 * 1024  # Set maximum upload size to 32 megabytes
 
 # Configure session to use filesystem (instead of signed cookies)
 app.config["SESSION_PERMANENT"] = False
@@ -25,13 +19,13 @@ Session(app)
 # Configure CS50 Library to use SQLite database
 db = SQL("sqlite:///mytube.db")
 
+
 @app.route("/", methods=["GET", "POST"])
 @login_required
 def index():
     if request.method == "POST":
         url = request.form.get("yt-play-url")
         title = request.form.get("play-title")
-
 
         # Checking if user provided the required input
         if not url:
@@ -42,7 +36,6 @@ def index():
             image = request.files['upload_image']
         except:
             return apology("Upload file error", 401)
-
 
         # Checking valid playlist URL
         videos = Playlist(url)
@@ -56,21 +49,21 @@ def index():
             video_title.append(YouTube(link).title)
 
         # Write submitted form to playlists database
-        db.execute("INSERT INTO playlists (title, user_id) VALUES (?, ?)" , title, session['user_id'])
+        db.execute("INSERT INTO playlists (title, user_id) VALUES (?, ?)", title, session['user_id'])
 
         # Select the newest playlist_id created to update video url and image name
-        playlist_id = db.execute("SELECT playlist_id FROM playlists ORDER BY created_at DESC LIMIT 1;")[0]['playlist_id']
+        playlist_id = db.execute("SELECT playlist_id FROM playlists ORDER BY created_at DESC LIMIT 1;")[0][
+            'playlist_id']
 
         # insert playlist videos to database
         for vlink, vtitle in zip(videos, video_title):
-
             # Convert video URLs to /embed
             vlink = vlink.replace('/watch?v=', '/embed/')
-            db.execute("INSERT INTO videos (url, video_title, playlist_id) VALUES (?, ?, ?)", vlink, vtitle, playlist_id)
+            db.execute("INSERT INTO videos (url, video_title, playlist_id) VALUES (?, ?, ?)", vlink, vtitle,
+                       playlist_id)
 
         # if user provide valid image
         if image:
-
             # save file as playlist_id name
             file_path = f"static/playlist/{playlist_id}.jpg"
             image.save(file_path)
@@ -86,6 +79,7 @@ def index():
         playlists = db.execute("SELECT * FROM playlists WHERE user_id = ?", session['user_id'])
 
         return render_template("index.html", playlists=playlists)
+
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -169,6 +163,7 @@ def logout():
     # Redirect user to login form
     return redirect("/")
 
+
 @app.route("/playlist")
 @login_required
 def playlist():
@@ -200,7 +195,6 @@ def remove():
     return redirect("/")
 
 
-
 @app.route("/settings")
 @login_required
 def settings():
@@ -209,6 +203,7 @@ def settings():
     playlists = db.execute("SELECT * FROM playlists WHERE user_id = ?", session['user_id'])
 
     return render_template("settings.html", user_name=user_name, playlists=playlists)
+
 
 @app.route("/change_usrname", methods=["GET", "POST"])
 @login_required
@@ -251,8 +246,6 @@ def change_pwd():
         db.execute("UPDATE users SET hash = ? WHERE id = ?", generate_password_hash(new_pwd), session["user_id"])
 
         return redirect("/settings")
-
-
 
 
 if __name__ == "__main__":

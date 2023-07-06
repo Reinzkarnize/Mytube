@@ -10,8 +10,6 @@ body {
     background-position: left;
     background-size: cover;
     background-image: url('https://picstatio.com/download/2560x1440/c4792a/sunset-tree-lake-nature-art.jpg');
-
-    /* background-color: #332B47; */
 }
 
 li {
@@ -369,6 +367,7 @@ span .fa-trash-can {
 
   display: flex;
   flex-direction: column;
+  text-decoration: none;
 }
 
 .playlist-container .border {
@@ -414,8 +413,6 @@ span .fa-trash-can {
 
   backdrop-filter: blur(15px);
   background-color: rgb(0, 0, 0, 0.15);
-
-  /* background-color: #403754; */
 }
 
 .play_list-add {
