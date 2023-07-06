@@ -198,6 +198,9 @@ def remove():
 @app.route("/settings")
 @login_required
 def settings():
+    """
+    account settings menu
+    """
     user_name = db.execute("SELECT username FROM users WHERE id = ?", session['user_id'])
 
     playlists = db.execute("SELECT * FROM playlists WHERE user_id = ?", session['user_id'])
