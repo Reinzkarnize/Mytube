@@ -4,7 +4,7 @@ YouTube is a fantastic platform for discovering and enjoying videos, but managin
 MyTube is a web application that allows users to save YouTube playlists and watch videos from their playlists in one convinient place. This README file provides an overview of the project and guides users on how to set up and use the application.
 
 ## Demo
-You can watch a demo of the MyTube project on [YouTube](https://youtu.be/cl2S9rl2kGs).
+You can watch a demo of the MyTube project on [YouTube](https://www.youtube.com/watch?v=LyDuxVg7uqw).
 
 ## Features
 
