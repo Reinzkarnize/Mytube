@@ -19,8 +19,6 @@ Session(app)
 # Configure CS50 Library to use SQLite database
 db = SQL("sqlite:///mytube.db")
 
-#test
-
 
 @app.route("/", methods=["GET", "POST"])
 @login_required
